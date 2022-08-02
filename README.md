@@ -1,25 +1,15 @@
-# emoflon-eclipse-build
+# gips-eclipse-build
 
-[![Build Eclipse eMoflon](https://github.com/eMoflon/emoflon-eclipse-build/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/eMoflon/emoflon-eclipse-build/actions/workflows/ci.yml)
+[![Build Eclipse GIPS](https://github.com/maxkratz/gips-eclipse-build/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/maxkratz/gips-eclipse-build/actions/workflows/ci.yml)
 
-This repository is used to automatically build an Eclipse [eMoflon](https://github.com/eMoflon/emoflon-ibex) environment.
+This repository is used to automatically build an Eclipse [GIPS](https://github.com/Echtzeitsysteme/gips) environment.
 
-| Name                     | OS      | eMoflon installed  | Dark theme installed | Splash image       | Pattern matcher | Additional packages |
-|--------------------------|---------|--------------------|----------------------|--------------------|-----------------|---------------------|
-| Eclipse eMoflon user     | Linux   | :heavy_check_mark: | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
-| Eclipse eMoflon dev      | Linux   |                    | :heavy_check_mark:   | :heavy_check_mark: | HiPE, *)        | :heavy_check_mark:  |
-| Eclipse eMoflon user CI  | Linux   | :heavy_check_mark: |                      |                    | HiPE            |                     |
-| Eclipse eMoflon dev CI   | Linux   |                    |                      |                    | HiPE, *)        |                     |
-| Eclipse eMoflon dev HiPE | Linux   |                    | :heavy_check_mark:   | :heavy_check_mark: | *)              | :heavy_check_mark:  |
-| Eclipse eMoflon user     | Windows | :heavy_check_mark: | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
-| Eclipse eMoflon dev      | Windows |                    | :heavy_check_mark:   | :heavy_check_mark: | HiPE, *)        | :heavy_check_mark:  |
-| Eclipse eMoflon dev HiPE | Windows |                    | :heavy_check_mark:   | :heavy_check_mark: | *)              | :heavy_check_mark:  |
-| Eclipse eMoflon user     | macOS   | :heavy_check_mark: | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
-| Eclipse eMoflon dev      | macOS   |                    | :heavy_check_mark:   | :heavy_check_mark: | HiPE, *)        | :heavy_check_mark:  |
-| Eclipse eMoflon dev HiPE | macOS   |                    | :heavy_check_mark:   | :heavy_check_mark: | *)              | :heavy_check_mark:  |
-
-*) Democles will be installed manually via the [emoflon-dev-workspace](https://github.com/eMoflon/emoflon-ibex#how-to-develop).
-Furthermore, all pattern matcher integrations for eMoflon (HiPE and Democles) will be installed manually via the [emoflon-dev-workspace](https://github.com/eMoflon/emoflon-ibex#how-to-develop).
+| Name                     | OS      | GIPS & eMoflon installed  | Dark theme installed | Splash image       | Pattern matcher | Additional packages |
+|--------------------------|---------|---------------------------|----------------------|--------------------|-----------------|---------------------|
+| Eclipse GIPS user        | Linux   | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
+| Eclipse GIPS user CI     | Linux   | :heavy_check_mark:        |                      |                    | HiPE            |                     |
+| Eclipse GIPS user        | Windows | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
+| Eclipse GIPS user        | macOS   | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
 
 **Additional packages** are installed for every non-CI build.
 Currently, the list of additional packages includes:
@@ -38,7 +28,7 @@ Quick installation using curl and bash:
 
 ### Normal installation
 
-**The latest release can be found [here](https://github.com/eMoflon/emoflon-eclipse-build/releases/latest).**
+**The latest release can be found [here](https://github.com/maxkratz/gips-eclipse-build/releases/latest).**
 Download an archive for the version you are looking for from the release page and extract it.
 
 ### Updating
