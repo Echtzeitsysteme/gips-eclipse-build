@@ -24,7 +24,7 @@ Feel free to request others, e.g., via Github issues.
 ## Usage/Installation
 
 Quick installation using curl and bash:
-`$ FOLDER="$HOME/eclipse-apps/emt"; mkdir -p $FOLDER && cd $FOLDER && curl https://raw.githubusercontent.com/eMoflon/emoflon-eclipse-build/main/emoflon-update.sh | bash -s -- $FOLDER`
+`$ FOLDER="$HOME/eclipse-apps/emt"; mkdir -p $FOLDER && cd $FOLDER && curl https://raw.githubusercontent.com/maxkratz/gips-eclipse-build/main/gips-update.sh | bash -s -- $FOLDER`
 
 ### Normal installation
 
@@ -33,9 +33,9 @@ Download an archive for the version you are looking for from the release page an
 
 ### Updating
 
-You can use the [update script](./emoflon-update.sh) to update your installation.
+You can use the [update script](./gips-update.sh) to update your installation.
 Example usage:
-`$ ./emoflon-update.sh ~/eclipse-apps/emt`
+`$ ./gips-update.sh ~/eclipse-apps/emt`
 
 
 ## Runner requirements
