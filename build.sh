@@ -29,11 +29,11 @@ VERSION=$VERSION # version comes from the CI env
 ARCHIVE_FILE_LINUX="eclipse-modeling-$VERSION-R-linux-gtk-x86_64.tar.gz"
 ARCHIVE_FILE_WINDOWS="eclipse-modeling-$VERSION-R-win32-x86_64.zip"
 ARCHIVE_FILE_MACOS="eclipse-modeling-$VERSION-R-macosx-cocoa-x86_64.dmg"
-OUTPUT_FILE_PREFIX_LINUX="eclipse-emoflon-linux"
-OUTPUT_FILE_PREFIX_WINDOWS="eclipse-emoflon-windows"
-OUTOUT_FILE_PREFIX_MACOS="eclipse-emoflon-macos"
+OUTPUT_FILE_PREFIX_LINUX="eclipse-gips-linux"
+OUTPUT_FILE_PREFIX_WINDOWS="eclipse-gips-windows"
+OUTOUT_FILE_PREFIX_MACOS="eclipse-gips-macos"
 MIRROR="https://ftp.fau.de"
-UPDATESITES="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/,https://hallvard.github.io/plantuml/,https://hipe-devops.github.io/HiPE-Updatesite/hipe.updatesite/,https://www.kermeta.org/k2/update,https://emoflon.org/emoflon-ibex-updatesite/snapshot/updatesite/,https://www.genuitec.com/updates/devstyle/ci/,https://download.eclipse.org/releases/$VERSION,https://www.codetogether.com/updates/ci/,http://update.eclemma.org/,https://pmd.github.io/pmd-eclipse-plugin-p2-site/,https://checkstyle.org/eclipse-cs-update-site/,https://spotbugs.github.io/eclipse/"
+UPDATESITES="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/,https://hallvard.github.io/plantuml/,https://hipe-devops.github.io/HiPE-Updatesite/hipe.updatesite/,https://www.kermeta.org/k2/update,https://emoflon.org/emoflon-ibex-updatesite/snapshot/updatesite/,https://www.genuitec.com/updates/devstyle/ci/,https://download.eclipse.org/releases/$VERSION,https://www.codetogether.com/updates/ci/,http://update.eclemma.org/,https://pmd.github.io/pmd-eclipse-plugin-p2-site/,https://checkstyle.org/eclipse-cs-update-site/,https://spotbugs.github.io/eclipse/,https://echtzeitsysteme.github.io/gips-updatesite/snapshot/updatesite/"
 EMOFLON_HEADLESS_SRC="https://api.github.com/repos/eMoflon/emoflon-headless/releases/latest"
 
 # Import plug-in:
@@ -42,7 +42,7 @@ IMPORT_PLUGIN_FILENAME="com.seeq.eclipse.importprojects_$IMPORT_PLUGIN_VERSION.j
 IMPORT_PLUGIN_SRC="https://api.github.com/repos/maxkratz/eclipse-import-projects-plugin/releases/tags/v$IMPORT_PLUGIN_VERSION"
 
 # Array with the order to install the plugins with.
-ORDER_LINUX=("xtext" "plantuml" "hipe" "kermeta" "misc" "emoflon-headless" "emoflon" "theme" "additional")
+ORDER_LINUX=("xtext" "plantuml" "hipe" "kermeta" "misc" "emoflon-headless" "emoflon" "theme" "additional" "gips")
 
 #
 # Configure OS specific details
@@ -132,7 +132,7 @@ setup_emoflon_headless_local_updatesite () {
 	# Append local folder to path (has to be absolute and, therefore, dynamic)
 	if [[ ! -z ${GITHUB_WORKSPACE} ]] && [[ "$OS" = "windows" ]]; then
 		log "Using a Github-hosted runner on Windows."
-		UPDATESITES+=",file:/D:/a/emoflon-eclipse-build/emoflon-eclipse-build/tmp/emoflon-headless/"
+		UPDATESITES+=",file:/D:/a/gips-eclipse-build/gips-eclipse-build/tmp/emoflon-headless/"
 	elif [[ "$OS" = "linux" ]]; then
 		log "Using a runner on Linux."
 		UPDATESITES+=",file://$PWD/tmp/emoflon-headless/"
@@ -241,6 +241,12 @@ for p in ${ORDER[@]}; do
 	fi
 	log "Installing plug-in: $p."
 	install_packages "$UPDATESITES" "./packages/$p-packages.list"
+
+	# Check if GIPS must be skipped (for dev builds).
+	if [[ "$p" = "gips" ]] && [[ $INSTALL_EMOFLON -eq 0 ]]; then
+		log "Skipping plug-in: $p."
+		continue
+	fi
 done
 
 # Install com.seeq.eclipse.importprojects (by hand because there is no public update site)

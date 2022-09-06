@@ -1,4 +1,4 @@
-name: Build Eclipse eMoflon
+name: Build Eclipse GIPS
 on:
   push:
     # Run pipeline for commits on branch 'main' and on 'testing/<stuff>'
@@ -27,7 +27,6 @@ env:
   EMOFLON_HEADLESS_SRC: "https://api.github.com/repos/eMoflon/emoflon-headless/releases/latest"
   # import plugin URL
   IMPORT_PLUGIN_SRC: "https://api.github.com/repos/maxkratz/eclipse-import-projects-plugin/releases/latest"
-
 
 jobs:
   # Get emoflon-headless updatesite release + eclipse import plugin artifacts
@@ -92,13 +91,13 @@ jobs:
           name: splash.bmp
           path: splash.bmp
 
-  # Build Eclipse eMoflon Linux user
+  # Build Eclipse GIPS Linux user
   build-linux-user:
     needs: [create-splash-image, collect-github-api-artifacts]
     runs-on: [ubuntu-20.04]
     steps:
       - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Linux user)."
+        run: echo "Started CI build (Eclipse GIPS Linux user)."
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Download splash image
@@ -123,49 +122,16 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: eclipse-emoflon-linux-user
-          path: eclipse-emoflon-linux-user.zip
+          name: eclipse-gips-linux-user
+          path: eclipse-gips-linux-user.zip
 
-  # Build Eclipse eMoflon Linux dev
-  build-linux-dev:
-    needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [ubuntu-20.04]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Linux dev)."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download splash image
-        uses: actions/download-artifact@v2
-        with:
-          name: splash.bmp
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: chmod +x build.sh && ./build.sh -m dev -o linux
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-linux-dev
-          path: eclipse-emoflon-linux-dev.zip
-
-  # Build Eclipse eMoflon Linux user CI
+  # Build Eclipse GIPS Linux user CI
   build-linux-user-ci:
     needs: [collect-github-api-artifacts]
     runs-on: [ubuntu-20.04]
     steps:
       - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Linux user CI)."
+        run: echo "Started CI build (Eclipse GIPS Linux user CI)."
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Download emoflon-headless updatesite
@@ -183,84 +149,20 @@ jobs:
       - name: Run build script
         run: chmod +x build.sh && ./build.sh -m user -o linux --skip-theme
       - name: Rename ZIP archive
-        run: mv eclipse-emoflon-linux-user.zip eclipse-emoflon-linux-user-ci.zip
+        run: mv eclipse-gips-linux-user.zip eclipse-gips-linux-user-ci.zip
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: eclipse-emoflon-linux-user-ci
-          path: eclipse-emoflon-linux-user-ci.zip
+          name: eclipse-gips-linux-user-ci
+          path: eclipse-gips-linux-user-ci.zip
 
-  # Build Eclipse eMoflon Linux dev CI
-  build-linux-dev-ci:
-    needs: [collect-github-api-artifacts]
-    runs-on: [ubuntu-20.04]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Linux dev CI)."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: chmod +x build.sh && ./build.sh -m dev -o linux --skip-theme
-      - name: Rename ZIP archive
-        run: mv eclipse-emoflon-linux-dev.zip eclipse-emoflon-linux-dev-ci.zip
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-linux-dev-ci
-          path: eclipse-emoflon-linux-dev-ci.zip
-
-  # Build Eclipse eMoflon Linux dev HiPE
-  build-linux-dev-hipe:
-    needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [ubuntu-20.04]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Linux dev HiPE)."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download splash image
-        uses: actions/download-artifact@v2
-        with:
-          name: splash.bmp
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: chmod +x build.sh && ./build.sh -m hipedev -o linux
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-linux-dev-hipe
-          path: eclipse-emoflon-linux-dev-hipe.zip
-
-  # Build Eclipse eMoflon macOS user
+  # Build Eclipse GIPS macOS user
   build-macos-user:
     needs: [create-splash-image, collect-github-api-artifacts]
     runs-on: [macos-latest]
     steps:
       - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon macOS user)."
+        run: echo "Started CI build (Eclipse GIPS macOS user)."
       - name: Install dependencies
         run: |
           brew update
@@ -290,94 +192,16 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: eclipse-emoflon-macos-user
-          path: eclipse-emoflon-macos-user.zip
+          name: eclipse-gips-macos-user
+          path: eclipse-gips-macos-user.zip
 
-  # Build Eclipse eMoflon macOS dev
-  build-macos-dev:
-    needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [macos-latest]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon macOS dev)."
-      - name: Install dependencies
-        run: |
-          brew update
-          brew install p7zip coreutils grep wget curl
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download splash image
-        uses: actions/download-artifact@v2
-        with:
-          name: splash.bmp
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: chmod +x build.sh && ./build.sh -m dev -o macos
-      - name: Fix permissions
-        run: sudo xattr -cr ./eclipse/Eclipse.app
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-macos-dev
-          path: eclipse-emoflon-macos-dev.zip
-
-  # Build Eclipse eMoflon macOS dev HiPE
-  build-macos-dev-hipe:
-    needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [macos-latest]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon macOS dev HiPE)."
-      - name: Install dependencies
-        run: |
-          brew update
-          brew install p7zip coreutils grep wget curl
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download splash image
-        uses: actions/download-artifact@v2
-        with:
-          name: splash.bmp
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: chmod +x build.sh && ./build.sh -m hipedev -o macos
-      - name: Fix permissions
-        run: sudo xattr -cr ./eclipse/Eclipse.app
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-macos-dev-hipe
-          path: eclipse-emoflon-macos-dev-hipe.zip
-
-  # Build Eclipse eMoflon Windows user
+  # Build Eclipse GIPS Windows user
   build-windows-user:
     needs: [create-splash-image, collect-github-api-artifacts]
     runs-on: [windows-2022]
     steps:
       - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Windows user)."
+        run: echo "Started CI build (Eclipse GIPS Windows user)."
       - name: Install dependencies
         run: |
           choco install wget curl unzip zip --no-progress
@@ -412,138 +236,35 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: eclipse-emoflon-windows-user
-          path: eclipse-emoflon-windows-user.zip
-
-  # Build Eclipse eMoflon Windows dev
-  build-windows-dev:
-    needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [windows-2022]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Windows dev)."
-      - name: Install dependencies
-        run: |
-          choco install wget curl unzip zip --no-progress
-      - name: Install correct Java version
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '16'
-      - name: Fix Git line endings
-        run: git config --global core.autocrlf input
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download splash image
-        uses: actions/download-artifact@v2
-        with:
-          name: splash.bmp
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: |
-          bash ./build.sh -m dev -o windows
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-windows-dev
-          path: eclipse-emoflon-windows-dev.zip
-
-  # Build Eclipse eMoflon Windows dev HiPE
-  build-windows-dev-hipe:
-    needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [windows-2022]
-    steps:
-      - name: Start message
-        run: echo "Started CI build (Eclipse eMoflon Windows dev HiPE)."
-      - name: Install dependencies
-        run: |
-          choco install wget curl unzip zip --no-progress
-      - name: Install correct Java version
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '16'
-      - name: Fix Git line endings
-        run: git config --global core.autocrlf input
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Download splash image
-        uses: actions/download-artifact@v2
-        with:
-          name: splash.bmp
-      - name: Download emoflon-headless updatesite
-        uses: actions/download-artifact@v2
-        with:
-          name: emoflon-headless-updatesite.zip
-      - name: Move emoflon-headless updatesite
-        run: |
-          mkdir -p ./tmp/emoflon-headless
-          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
-      - name: Download Eclipse import plugin JAR
-        uses: actions/download-artifact@v2
-        with:
-          name: com.seeq.eclipse.importprojects.jar
-      - name: Run build script
-        run: |
-          bash ./build.sh -m hipedev -o windows
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: eclipse-emoflon-windows-dev-hipe
-          path: eclipse-emoflon-windows-dev-hipe.zip
+          name: eclipse-gips-windows-user
+          path: eclipse-gips-windows-user.zip
 
   # Create a release if running on tag
   create-release:
-    needs: [build-linux-user, build-linux-dev, build-linux-user-ci, build-linux-dev-ci, build-linux-dev-hipe, build-macos-user, build-macos-dev, build-macos-dev-hipe, build-windows-user, build-windows-dev, build-windows-dev-hipe]
+    needs: [build-linux-user, build-linux-user-ci, build-macos-user, build-windows-user]
     runs-on: [ubuntu-20.04]
     # Only run on pushed tags (and explicitely ignore scheduled runs)
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event_name != 'schedule'
     steps:
       - name: Collect artifacts
         uses: actions/download-artifact@master
-      - name: Release eclipse-emoflon-linux
+      - name: Release eclipse-gips-linux
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            eclipse-emoflon-linux-user/eclipse-emoflon-linux-user.zip
-            eclipse-emoflon-linux-dev/eclipse-emoflon-linux-dev.zip
-      - name: Release eclipse-emoflon-macos
+            eclipse-gips-linux-user/eclipse-gips-linux-user.zip
+      - name: Release eclipse-gips-macos
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            eclipse-emoflon-macos-user/eclipse-emoflon-macos-user.zip
-            eclipse-emoflon-macos-dev/eclipse-emoflon-macos-dev.zip
-      - name: Release eclipse-emoflon-linux-ci
+            eclipse-gips-macos-user/eclipse-gips-macos-user.zip
+      - name: Release eclipse-gips-linux-ci
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            eclipse-emoflon-linux-user-ci/eclipse-emoflon-linux-user-ci.zip
-            eclipse-emoflon-linux-dev-ci/eclipse-emoflon-linux-dev-ci.zip
-      - name: Release eclipse-emoflon-windows
+            eclipse-gips-linux-user-ci/eclipse-gips-linux-user-ci.zip
+      - name: Release eclipse-gips-windows
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            eclipse-emoflon-windows-user/eclipse-emoflon-windows-user.zip
-            eclipse-emoflon-windows-dev/eclipse-emoflon-windows-dev.zip
-      - name: Release eclipse-emoflon-dev-hipe-1
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            eclipse-emoflon-linux-dev-hipe/eclipse-emoflon-linux-dev-hipe.zip
-            eclipse-emoflon-windows-dev-hipe/eclipse-emoflon-windows-dev-hipe.zip
-      - name: Release eclipse-emoflon-dev-hipe-2
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            eclipse-emoflon-macos-dev-hipe/eclipse-emoflon-macos-dev-hipe.zip
+            eclipse-gips-windows-user/eclipse-gips-windows-user.zip

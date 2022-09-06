@@ -4,10 +4,10 @@
 # Config
 #
 
-ECLIPSE_ARCHIVE=eclipse-emoflon-windows-dev # Name of the archive to download
+ECLIPSE_ARCHIVE=eclipse-gips-windows-user   # Name of the archive to download
 FORCE_DOWNLOAD=0                            # 1 = force download of new archive
 TARGET_DIR=$1                               # Target directory
-API_URL="https://api.github.com/repos/eMoflon/emoflon-eclipse-build/releases/latest"
+API_URL="https://api.github.com/repos/maxkratz/gips-eclipse-build/releases/latest"
 
 set -e
 START_PWD=$PWD
@@ -39,7 +39,7 @@ if [[ ! -f "./$ECLIPSE_ARCHIVE.zip" ]] || [[ "$FORCE_DOWNLOAD" = "1" ]]; then
         | grep "\"name\"\: \"v" \
         | cut -d : -f 2,3 \
         | tr -d \" |tr -d ,)
-	log "Downloading latest eMoflon Eclipse archive from Github.\nRelease:$TAG"
+	log "Downloading latest GIPS Eclipse archive from Github.\nRelease:$TAG"
 	curl -s $API_URL \
         | grep "$ECLIPSE_ARCHIVE.*zip" \
         | cut -d : -f 2,3 \
