@@ -7,7 +7,7 @@
 ECLIPSE_ARCHIVE=eclipse-gips-windows-user   # Name of the archive to download
 FORCE_DOWNLOAD=0                            # 1 = force download of new archive
 TARGET_DIR=$1                               # Target directory
-API_URL="https://api.github.com/repos/maxkratz/gips-eclipse-build/releases/latest"
+API_URL="https://api.github.com/repos/Echtzeitsysteme/gips-eclipse-build/releases/latest"
 
 set -e
 START_PWD=$PWD
