@@ -159,7 +159,7 @@ jobs:
   # Build Eclipse GIPS macOS user
   build-macos-user:
     needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [macos-latest]
+    runs-on: [macos-12]
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS macOS user)."
