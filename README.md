@@ -14,7 +14,6 @@ This repository is used to automatically build an Eclipse [GIPS](https://github.
 **Additional packages** are installed for every non-CI build.
 Currently, the list of additional packages includes:
 - [EclEmma](https://www.eclemma.org/)
-- [PMD](https://pmd.github.io/latest/index.html)
 - [Checkstyle](https://checkstyle.org/eclipse-cs/#!/)
 - [SpotBugs](https://spotbugs.github.io/https://spotbugs.github.io/)
 
