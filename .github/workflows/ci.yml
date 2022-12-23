@@ -165,7 +165,6 @@ jobs:
         run: echo "Started CI build (Eclipse GIPS macOS user)."
       - name: Install dependencies
         run: |
-          brew update
           brew install p7zip coreutils grep wget curl
       - name: Check out repository code
         uses: actions/checkout@v3
