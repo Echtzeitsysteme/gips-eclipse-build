@@ -248,22 +248,22 @@ jobs:
       - name: Collect artifacts
         uses: actions/download-artifact@master
       - name: Release eclipse-gips-linux
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             eclipse-gips-linux-user/eclipse-gips-linux-user.zip
       - name: Release eclipse-gips-macos
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             eclipse-gips-macos-user/eclipse-gips-macos-user.zip
       - name: Release eclipse-gips-linux-ci
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             eclipse-gips-linux-user-ci/eclipse-gips-linux-user-ci.zip
       - name: Release eclipse-gips-windows
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             eclipse-gips-windows-user/eclipse-gips-windows-user.zip
