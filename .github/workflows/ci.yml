@@ -194,6 +194,44 @@ jobs:
           name: eclipse-gips-macos-user
           path: eclipse-gips-macos-user.zip
 
+  # Build Eclipse GIPS macOS ARM user
+  build-macos-arm-user:
+    needs: [create-splash-image, collect-github-api-artifacts]
+    runs-on: [macos-14]
+    steps:
+      - name: Start message
+        run: echo "Started CI build (Eclipse GIPS macOS user)."
+      - name: Install dependencies
+        run: |
+          brew install p7zip coreutils grep wget curl
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Download splash image
+        uses: actions/download-artifact@v4
+        with:
+          name: splash.bmp
+      - name: Download emoflon-headless updatesite
+        uses: actions/download-artifact@v4
+        with:
+          name: emoflon-headless-updatesite.zip
+      - name: Move emoflon-headless updatesite
+        run: |
+          mkdir -p ./tmp/emoflon-headless
+          mv emoflon-headless-updatesite.zip ./tmp/emoflon-headless/updatesite.zip
+      - name: Download Eclipse import plugin JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: com.seeq.eclipse.importprojects.jar
+      - name: Run build script
+        run: chmod +x build.sh && ./build.sh -m user -o macosarm
+      - name: Fix permissions
+        run: sudo xattr -cr ./eclipse/Eclipse.app
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: eclipse-gips-macos-arm-user
+          path: eclipse-gips-macos-arm-user.zip
+
   # Build Eclipse GIPS Windows user
   build-windows-user:
     needs: [create-splash-image, collect-github-api-artifacts]
@@ -240,7 +278,7 @@ jobs:
 
   # Create a release if running on tag
   create-release:
-    needs: [build-linux-user, build-linux-user-ci, build-macos-user, build-windows-user]
+    needs: [build-linux-user, build-linux-user-ci, build-macos-user, build-macos-arm-user, build-windows-user]
     runs-on: [ubuntu-20.04]
     # Only run on pushed tags (and explicitely ignore scheduled runs)
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event_name != 'schedule'
@@ -257,6 +295,11 @@ jobs:
         with:
           files: |
             eclipse-gips-macos-user/eclipse-gips-macos-user.zip
+      - name: Release eclipse-gips-macos
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            eclipse-gips-macos-arm-user/eclipse-gips-macos-arm-user.zip
       - name: Release eclipse-gips-linux-ci
         uses: softprops/action-gh-release@v2
         with:
