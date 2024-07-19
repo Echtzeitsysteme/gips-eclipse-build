@@ -4,12 +4,13 @@
 
 This repository is used to automatically build an Eclipse [GIPS](https://github.com/Echtzeitsysteme/gips) environment.
 
-| Name                     | OS      | GIPS & eMoflon installed  | Dark theme installed | Splash image       | Pattern matcher | Additional packages |
-|--------------------------|---------|---------------------------|----------------------|--------------------|-----------------|---------------------|
-| Eclipse GIPS user        | Linux   | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
-| Eclipse GIPS user CI     | Linux   | :heavy_check_mark:        |                      |                    | HiPE            |                     |
-| Eclipse GIPS user        | Windows | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
-| Eclipse GIPS user        | macOS   | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
+| Name                     | OS          | GIPS & eMoflon installed  | Dark theme installed | Splash image       | Pattern matcher | Additional packages |
+|--------------------------|-------------|---------------------------|----------------------|--------------------|-----------------|---------------------|
+| Eclipse GIPS user        | Linux       | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
+| Eclipse GIPS user CI     | Linux       | :heavy_check_mark:        |                      |                    | HiPE            |                     |
+| Eclipse GIPS user        | Windows     | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
+| Eclipse GIPS user        | macOS       | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
+| Eclipse GIPS user        | macOS (ARM) | :heavy_check_mark:        | :heavy_check_mark:   | :heavy_check_mark: | HiPE            | :heavy_check_mark:  |
 
 **Additional packages** are installed for every non-CI build.
 Currently, the list of additional packages includes:

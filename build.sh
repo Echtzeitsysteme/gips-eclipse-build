@@ -68,6 +68,13 @@ elif [[ "$OS" = "macos" ]]; then
 	ORDER=("${ORDER_LINUX[@]}")
 	ECLIPSE_BIN_PATH="./eclipse/Eclipse.app/Contents/MacOS/eclipse"
 	ECLIPSE_BASE_PATH="./eclipse/Eclipse.app/Contents/Eclipse"
+elif [[ "$OS" = "macosarm" ]]; then
+	ARCHIVE_FILE=$ARCHIVE_FILE_MACOSARM
+	OUTPUT_FILE_PREFIX=$OUTOUT_FILE_PREFIX_MACOSARM
+	# Lets try with linux install order
+	ORDER=("${ORDER_LINUX[@]}")
+	ECLIPSE_BIN_PATH="./eclipse/Eclipse.app/Contents/MacOS/eclipse"
+	ECLIPSE_BASE_PATH="./eclipse/Eclipse.app/Contents/Eclipse"
 else
 	echo "=> OS $OS not known."
 	exit 1
@@ -89,7 +96,7 @@ parse_package_list () {
 
 # Installs a given list of packages from a given update site.
 install_packages () {
-	if [[ "$OS" = "macos" ]]; then
+	if [[ "$OS" = "macos" ]] || [[ "$OS" = "macosarm" ]]; then
 		chmod +x $ECLIPSE_BIN_PATH
 	fi
 
@@ -139,7 +146,7 @@ setup_emoflon_headless_local_updatesite () {
 	elif [[ "$OS" = "windows" ]]; then
 		log "Using a runner on Windows."
 		UPDATESITES+=",file://$(echo $PWD | sed -e 's/\/mnt\///g' | sed -e 's/^\///' -e 's/\//\\/g' -e 's/^./\0:/')\tmp\emoflon-headless\\"
-	elif [[ "$OS" = "macos" ]]; then
+	elif [[ "$OS" = "macos" ]] || [[ "$OS" = "macosarm" ]]; then
 		log "Using a runner on macOS."
 		UPDATESITES+=",file://$PWD/tmp/emoflon-headless/"
 	fi
@@ -227,6 +234,10 @@ elif [[ "$OS" = "windows" ]]; then
 	unzip -qq -o eclipse-modeling-$VERSION-R-win32-x86_64.zip
 elif [[ "$OS" = "macos" ]]; then
 	7z x $ARCHIVE_FILE_MACOS
+	# Rename folder because "Eclipse" is inconsistent
+	mv Eclipse eclipse
+elif [[ "$OS" = "macosarm" ]]; then
+	7z x $ARCHIVE_FILE_MACOSARM
 	# Rename folder because "Eclipse" is inconsistent
 	mv Eclipse eclipse
 fi
