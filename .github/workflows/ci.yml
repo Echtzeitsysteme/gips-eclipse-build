@@ -295,7 +295,7 @@ jobs:
         with:
           files: |
             eclipse-gips-macos-user/eclipse-gips-macos-user.zip
-      - name: Release eclipse-gips-macos
+      - name: Release eclipse-gips-macos-arm
         uses: softprops/action-gh-release@v2
         with:
           files: |
