@@ -33,7 +33,7 @@ jobs:
   # This is necessary because some of the Github-hosted macOS-based runner
   # did trigger the API rate limit from time to time.
   collect-github-api-artifacts:
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     steps:
       - name: Find emoflon-headless updatesite
         run: |
@@ -77,7 +77,7 @@ jobs:
 
   # Create splash image
   create-splash-image:
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
   # Build Eclipse GIPS Linux user
   build-linux-user:
     needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user)."
@@ -128,7 +128,7 @@ jobs:
   # Build Eclipse GIPS Linux user CI
   build-linux-user-ci:
     needs: [collect-github-api-artifacts]
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user CI)."
@@ -283,7 +283,7 @@ jobs:
   # Create a release if running on tag
   create-release:
     needs: [build-linux-user, build-linux-user-ci, build-macos-user, build-macos-arm-user, build-windows-user]
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
     # Only run on pushed tags (and explicitely ignore scheduled runs)
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event_name != 'schedule'
     steps:
