@@ -35,7 +35,7 @@ OUTPUT_FILE_PREFIX_WINDOWS="eclipse-gips-windows"
 OUTOUT_FILE_PREFIX_MACOS="eclipse-gips-macos"
 OUTOUT_FILE_PREFIX_MACOSARM="eclipse-gips-macos-arm"
 MIRROR="https://ftp.fau.de"
-UPDATESITES="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/,https://hallvard.github.io/plantuml/,https://hipe-devops.github.io/HiPE-Updatesite/hipe.updatesite/,https://www.kermeta.org/k2/update,https://emoflon.org/emoflon-ibex-updatesite/snapshot/updatesite/,https://www.genuitec.com/updates/devstyle/ci/,https://download.eclipse.org/releases/$VERSION,https://www.codetogether.com/updates/ci/,http://update.eclemma.org/,https://pmd.github.io/pmd-eclipse-plugin-p2-site/,https://checkstyle.org/eclipse-cs-update-site/,https://spotbugs.github.io/eclipse/,https://download.eclipse.org/technology/m2e/releases/latest,https://echtzeitsysteme.github.io/gips-updatesite/snapshot/updatesite/"
+UPDATESITES="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/,https://hallvard.github.io/plantuml/,https://hipe-devops.github.io/HiPE-Updatesite/hipe.updatesite/,https://www.kermeta.org/k2/update,https://emoflon.org/emoflon-ibex-updatesite/snapshot/updatesite/,https://devstyle.codetogether.io/,https://download.eclipse.org/releases/$VERSION,https://www.codetogether.com/updates/ci/,http://update.eclemma.org/,https://pmd.github.io/pmd-eclipse-plugin-p2-site/,https://checkstyle.org/eclipse-cs-update-site/,https://spotbugs.github.io/eclipse/,https://download.eclipse.org/technology/m2e/releases/latest,https://echtzeitsysteme.github.io/gips-updatesite/snapshot/updatesite/"
 EMOFLON_HEADLESS_SRC="https://api.github.com/repos/eMoflon/emoflon-headless/releases/latest"
 
 # Import plug-in:
@@ -199,29 +199,6 @@ remove_update_sites () {
 	rm -rf $UPDATE_SITE_CONFIG_PATH/$UPDATE_SITE_METADATA
 }
 
-# Removes broken org.apache.commons.logging JAR from plug-ins
-remove_broken_commons_logging () {
-	log "Removes broken org.apache.commons.logging JAR from plug-ins."
-	rm $ECLIPSE_BASE_PATH/plugins/org.apache.commons.logging_1.2.0.v20180409-1502.jar
-	# force org.eclipse.equinox to take correct JAR into account
-	# org.apache.commons.logging,1.2.0,plugins/org.apache.commons.logging_1.2.0.jar,4,false
-	sed -i '/org.apache.commons.lang3/a org.apache.commons.logging,1.2.0,plugins/org.apache.commons.logging_1.2.0.jar,4,false' $ECLIPSE_BASE_PATH/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
-	# org.apache.commons.logging,1.2.0.v20180409-1502,plugins/org.apache.commons.logging_1.2.0.v20180409-1502.jar,4,false
-	sed -i '/org.apache.commons.logging,1.2.0.v20180409-1502,plugins\/org.apache.commons.logging_1.2.0.v20180409-1502.jar,4,false/d' $ECLIPSE_BASE_PATH/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
-}
-
-# Copies the non-broken org.apache.commons.logging JAR from plug-ins
-save_non_broken_commons_logging () {
-	log "Save non-broken org.apache.commons.logging JAR from plug-ins."
-	cp $ECLIPSE_BASE_PATH/plugins/org.apache.commons.logging_1.2.0.jar /tmp/org.apache.commons.logging_1.2.0.jar
-}
-
-# Restores the non-broken org.apache.commons.logging JAR to plug-ins
-restore_non_broken_commons_logging () {
-	log "Restores the non-broken org.apache.commons.logging JAR from plug-ins."
-	cp /tmp/org.apache.commons.logging_1.2.0.jar $ECLIPSE_BASE_PATH/plugins/org.apache.commons.logging_1.2.0.jar
-	rm /tmp/org.apache.commons.logging_1.2.0.jar
-}
 
 #
 # Script
@@ -269,9 +246,6 @@ fi
 
 # Install global Eclipse settings from config file
 install_global_eclipse_settings
-
-# Save non-broken org.apache.commons.logging JAR from plug-ins
-save_non_broken_commons_logging
 
 log "Install Eclipse plug-ins."
 for p in ${ORDER[@]}; do
@@ -322,12 +296,6 @@ else
 	log "Deploy custom splash image."
 	chmod +x splash.sh && ./splash.sh deploy $VERSION $ECLIPSE_BASE_PATH
 fi
-
-# Remove broken org.apache.commons.logging JAR
-remove_broken_commons_logging
-
-# Restore non-broken org.apache.commons.logging JAR
-restore_non_broken_commons_logging
 
 log "Clean-up old archives and create new archive."
 rm -f ./$OUTPUT_FILE
