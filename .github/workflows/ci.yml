@@ -80,7 +80,7 @@ jobs:
     runs-on: [ubuntu-22.04]
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Start message
         run: echo "Creating splash image for version $VERSION."
       - name: Run splash creator script
@@ -99,7 +99,7 @@ jobs:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user)."
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download splash image
         uses: actions/download-artifact@v5
         with:
@@ -133,7 +133,7 @@ jobs:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user CI)."
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download emoflon-headless updatesite
         uses: actions/download-artifact@v5
         with:
@@ -167,7 +167,7 @@ jobs:
         run: |
           brew install p7zip coreutils grep wget curl
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download splash image
         uses: actions/download-artifact@v5
         with:
@@ -205,7 +205,7 @@ jobs:
         run: |
           brew install p7zip coreutils grep wget curl
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download splash image
         uses: actions/download-artifact@v5
         with:
@@ -250,7 +250,7 @@ jobs:
       - name: Fix Git line endings
         run: git config --global core.autocrlf input
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download splash image
         uses: actions/download-artifact@v5
         with:
