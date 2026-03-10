@@ -35,7 +35,7 @@ OUTPUT_FILE_PREFIX_WINDOWS="eclipse-gips-windows"
 OUTPUT_FILE_PREFIX_MACOS="eclipse-gips-macos"
 OUTPUT_FILE_PREFIX_MACOSARM="eclipse-gips-macos-arm"
 MIRROR="https://ftp.fau.de"
-UPDATESITES="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/,https://hallvard.github.io/plantuml/,https://hipe-devops.github.io/HiPE-Updatesite/hipe.updatesite/,https://www.kermeta.org/k2/update,https://emoflon.org/emoflon-ibex-updatesite/snapshot/updatesite/,https://devstyle.codetogether.io/,https://download.eclipse.org/releases/$VERSION,https://www.codetogether.com/updates/ci/,http://update.eclemma.org/,https://pmd.github.io/pmd-eclipse-plugin-p2-site/,https://checkstyle.org/eclipse-cs-update-site/,https://spotbugs.github.io/eclipse/,https://download.eclipse.org/technology/m2e/releases/latest,https://echtzeitsysteme.github.io/gips-updatesite/snapshot/updatesite/"
+UPDATESITES="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/,https://hallvard.github.io/plantuml/,https://hipe-devops.github.io/HiPE-Updatesite/hipe.updatesite/,https://www.kermeta.org/k2/update,https://emoflon.org/emoflon-ibex-updatesite/snapshot/updatesite/,https://devstyle.codetogether.io/,https://download.eclipse.org/releases/$VERSION,http://update.eclemma.org/,https://pmd.github.io/pmd-eclipse-plugin-p2-site/,https://checkstyle.org/eclipse-cs-update-site/,https://spotbugs.github.io/eclipse/,https://download.eclipse.org/technology/m2e/releases/latest,https://echtzeitsysteme.github.io/gips-updatesite/snapshot/updatesite/"
 EMOFLON_HEADLESS_SRC="https://api.github.com/repos/eMoflon/emoflon-headless/releases/latest"
 
 # Import plug-in:
