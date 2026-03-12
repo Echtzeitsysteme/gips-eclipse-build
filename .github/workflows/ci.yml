@@ -33,7 +33,7 @@ jobs:
   # This is necessary because some of the Github-hosted macOS-based runner
   # did trigger the API rate limit from time to time.
   collect-github-api-artifacts:
-    runs-on: [ubuntu-22.04]
+    runs-on: [ubuntu-24.04]
     steps:
       - name: Find emoflon-headless updatesite
         run: |
@@ -77,10 +77,12 @@ jobs:
 
   # Create splash image
   create-splash-image:
-    runs-on: [ubuntu-22.04]
+    runs-on: [ubuntu-24.04]
     steps:
       - name: Check out repository code
         uses: actions/checkout@v6
+      - name: Install dependencies
+        run: sudo apt-get install -yq imagemagick
       - name: Start message
         run: echo "Creating splash image for version $VERSION."
       - name: Run splash creator script
@@ -94,7 +96,7 @@ jobs:
   # Build Eclipse GIPS Linux user
   build-linux-user:
     needs: [create-splash-image, collect-github-api-artifacts]
-    runs-on: [ubuntu-22.04]
+    runs-on: [ubuntu-24.04]
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user)."
@@ -128,7 +130,7 @@ jobs:
   # Build Eclipse GIPS Linux user CI
   build-linux-user-ci:
     needs: [collect-github-api-artifacts]
-    runs-on: [ubuntu-22.04]
+    runs-on: [ubuntu-24.04]
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user CI)."
@@ -163,11 +165,11 @@ jobs:
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS macOS user)."
-      - name: Install dependencies
-        run: |
-          brew install p7zip coreutils grep wget curl
       - name: Check out repository code
         uses: actions/checkout@v6
+      - name: Install dependencies
+        run: |
+          bash scripts/install-macos-dependencies.sh
       - name: Download splash image
         uses: actions/download-artifact@v8
         with:
@@ -201,11 +203,11 @@ jobs:
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS macOS user)."
-      - name: Install dependencies
-        run: |
-          brew install p7zip coreutils grep wget curl
       - name: Check out repository code
         uses: actions/checkout@v6
+      - name: Install dependencies
+        run: |
+          bash scripts/install-macos-dependencies.sh
       - name: Download splash image
         uses: actions/download-artifact@v8
         with:
@@ -239,11 +241,8 @@ jobs:
     steps:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Windows user)."
-      - name: Install dependencies
-        run: |
-          choco install wget curl unzip zip --no-progress
       - name: Install correct Java version
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'adopt'
           java-version: '16'
@@ -251,6 +250,9 @@ jobs:
         run: git config --global core.autocrlf input
       - name: Check out repository code
         uses: actions/checkout@v6
+      - name: Install dependencies
+        run: |
+          bash scripts/install-windows-dependencies.sh
       - name: Download splash image
         uses: actions/download-artifact@v8
         with:
@@ -279,7 +281,7 @@ jobs:
   # Create a release if running on tag
   create-release:
     needs: [build-linux-user, build-linux-user-ci, build-macos-user, build-macos-arm-user, build-windows-user]
-    runs-on: [ubuntu-22.04]
+    runs-on: [ubuntu-24.04]
     # Only run on pushed tags (and explicitely ignore scheduled runs)
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && github.event_name != 'schedule'
     steps:
