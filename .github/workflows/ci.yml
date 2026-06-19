@@ -80,7 +80,7 @@ jobs:
     runs-on: [ubuntu-24.04]
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         run: sudo apt-get install -yq imagemagick
       - name: Start message
@@ -101,7 +101,7 @@ jobs:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user)."
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Download splash image
         uses: actions/download-artifact@v8
         with:
@@ -135,7 +135,7 @@ jobs:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS Linux user CI)."
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Download emoflon-headless updatesite
         uses: actions/download-artifact@v8
         with:
@@ -166,7 +166,7 @@ jobs:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS macOS user)."
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         run: |
           bash scripts/install-macos-dependencies.sh
@@ -204,7 +204,7 @@ jobs:
       - name: Start message
         run: echo "Started CI build (Eclipse GIPS macOS user)."
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         run: |
           bash scripts/install-macos-dependencies.sh
@@ -249,7 +249,7 @@ jobs:
       - name: Fix Git line endings
         run: git config --global core.autocrlf input
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install dependencies
         run: |
           bash scripts/install-windows-dependencies.sh
